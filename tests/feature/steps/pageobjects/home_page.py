@@ -3,7 +3,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.common.by import By
 
-from tests.feature.steps.pageobjects.login_page import LoginPage
+from tests.feature.steps.pageobjects.coffee_shopping_page import CoffeeShoppingPage
+from tests.feature.steps.pageobjects.top_bar_page import TopBar
 
 
 class HomePage:
@@ -24,7 +25,7 @@ class HomePage:
         login_button = self.driver.find_element(By.CSS_SELECTOR, '.LoginDropdownButton')
         login_button.click()
 
-        return LoginPage(self.driver, self.wait)
+        return TopBar(self.driver, self.wait)
 
     def get_top_bar_wellcome_message(self):
         return self.driver.find_element(By.ID, 'ta-login-dropdown--logged').text
@@ -36,3 +37,9 @@ class HomePage:
             accept_button.click()
         except TimeoutException:
             print ("Cookie banner did not appear. Continue")
+
+    def click_coffee_icon_in_menu_bar(self):
+        coffee_icon = self.driver.find_element(By.CSS_SELECTOR, '[data-qa=menu_coffee]')
+        coffee_icon.click()
+
+        return CoffeeShoppingPage(self.driver, self.wait)
