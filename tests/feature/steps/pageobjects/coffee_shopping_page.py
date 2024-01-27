@@ -27,6 +27,20 @@ class CoffeeShoppingPage:
         napoli_add_button = self.driver.find_element(By.ID, 'AddToBagButton__button-CremaComponentId-19')
         napoli_add_button.click()
 
+        # wait until quantity selector is loaded
+        quantity_selector = QuantitySelector(self.driver, self.wait)
+        quantity_selector.select_capsules_quatity()
+
+
+class QuantitySelector:
+    def __init__(self, driver, wait):
+        self.driver = driver
+        self.wait = wait
+        self.wait_until_loaded()
+
     def select_capsules_quatity(self):
-        quantity_button = self.driver.find_element(By.ID, 'ta - quantity - selector__predefined - 1')
+        quantity_button = self.driver.find_element(By.ID, 'ta-quantity-selector__predefined-1')
         quantity_button.click()
+
+    def wait_until_loaded(self):
+        self.wait.until(EC.visibility_of_element_located((By.ID, 'ta-quantity-selector__predefined-1')))
